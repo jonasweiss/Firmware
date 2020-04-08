@@ -45,7 +45,6 @@ MPU9250::print_usage()
 	PRINT_MODULE_USAGE_PARAMS_I2C_SPI_DRIVER(false, true);
 	PRINT_MODULE_USAGE_PARAM_FLAG('M', "Enable Magnetometer (AK8963)", true);
 	PRINT_MODULE_USAGE_PARAM_INT('R', 0, 0, 35, "Rotation", true);
-	PRINT_MODULE_USAGE_COMMAND("reset");
 	PRINT_MODULE_USAGE_DEFAULT_COMMANDS();
 }
 
@@ -67,11 +66,6 @@ I2CSPIDriverBase *MPU9250::instantiate(const BusCLIArguments &cli, const BusInst
 	}
 
 	return instance;
-}
-
-void MPU9250::custom_method(const BusCLIArguments &cli)
-{
-	Reset();
 }
 
 extern "C" int mpu9250_main(int argc, char *argv[])
@@ -112,10 +106,6 @@ extern "C" int mpu9250_main(int argc, char *argv[])
 
 	if (!strcmp(verb, "status")) {
 		return ThisDriver::module_status(iterator);
-	}
-
-	if (!strcmp(verb, "reset")) {
-		return ThisDriver::module_custom_method(cli, iterator);
 	}
 
 	ThisDriver::print_usage();
